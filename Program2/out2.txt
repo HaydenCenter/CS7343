@@ -1,0 +1,520 @@
+Number of threads : 4   |   Number of objects : 10
+
+Thread 0 started
+Thread 1 started
+Thread 2 started
+Thread 3 started
+The dealer inserted : 18
+
+( 18 )
+
+    Thread 3 (3, 0)  popped x = 18 (2). Not matched. Need to push x - 2 back on queue 
+
+( )
+
+The dealer inserted : 37
+
+( 37 )
+
+    Thread 1 (1, 2)  popped x = 37 (1). Matched. Need to push 3/5 * x back on queue
+
+( )
+
+The dealer inserted : 6
+
+( 6 )
+
+    Thread 2 (2, 3)  popped x = 6 (2). Matched. Need to push 3/5 * x back on queue
+
+( )
+
+The dealer inserted : 31
+
+( 31 )
+
+    Thread 0 (0, 1)  popped x = 31 (3). Not matched. Need to push x - 2 back on queue 
+
+( )
+
+The dealer inserted : 34
+
+( 34 )
+
+The dealer inserted : 35
+
+( 34 35 )
+
+The dealer inserted : 11
+
+( 34 35 11 )
+
+The dealer inserted : 32
+
+( 34 35 11 32 )
+
+    Thread 2   score : 2   total : 2
+         Thread 2 pushed 4 to back of the queue
+
+( 34 35 11 32 4 )
+
+    Thread 2 (2, 3)  popped x = 34 (2). Matched. Need to push 3/5 * x back on queue
+
+( 35 11 32 4 )
+
+         Thread 3 pushed 16 to back of the queue
+
+( 35 11 32 4 16 )
+
+    Thread 3 (3, 0)  popped x = 35 (3). Matched. Need to push 3/5 * x back on queue
+
+( 11 32 4 16 )
+
+         Thread 0 pushed 29 to back of the queue
+
+( 11 32 4 16 29 )
+
+    Thread 0 (0, 1)  popped x = 11 (3). Not matched. Need to push x - 2 back on queue 
+
+( 32 4 16 29 )
+
+    Thread 1   score : 14   total : 14
+         Thread 1 pushed 23 to back of the queue
+
+( 32 4 16 29 23 )
+
+    Thread 1 (1, 2)  popped x = 32 (0). Not matched. Need to push x - 2 back on queue 
+
+( 4 16 29 23 )
+
+    Thread 2   score : 13   total : 15
+         Thread 0 pushed 9 to back of the queue
+
+( 4 16 29 23 9 )
+
+    Thread 0 (0, 1)  popped x = 4 (0). Final bonus for object : no need to push back.
+
+( 16 29 23 9 )
+
+         Thread 2 pushed 21 to back of the queue
+
+( 16 29 23 9 21 )
+
+    Thread 2 (2, 3)  popped x = 16 (0). Not matched. Need to push x - 2 back on queue 
+
+( 29 23 9 21 )
+
+    Thread 3   score : 14   total : 14
+         Thread 3 pushed 21 to back of the queue
+
+( 29 23 9 21 21 )
+
+    Thread 3 (3, 0)  popped x = 29 (1). Not matched. Need to push x - 2 back on queue 
+
+( 23 9 21 21 )
+
+         Thread 1 pushed 30 to back of the queue
+
+( 23 9 21 21 30 )
+
+    Thread 1 (1, 2)  popped x = 23 (3). Not matched. Need to push x - 2 back on queue 
+
+( 9 21 21 30 )
+
+Thread 0   score : 4   total : 4 (*)
+    Thread 0 (0, 1)  popped x = 9 (1). Matched. Need to push 3/5 * x back on queue
+
+( 21 21 30 )
+
+The dealer inserted : 6
+
+( 21 21 30 6 )
+
+         Thread 2 pushed 14 to back of the queue
+
+( 21 21 30 6 14 )
+
+    Thread 2 (2, 3)  popped x = 21 (1). Not matched. Need to push x - 2 back on queue 
+
+( 21 30 6 14 )
+
+         Thread 3 pushed 27 to back of the queue
+
+( 21 30 6 14 27 )
+
+    Thread 3 (3, 0)  popped x = 21 (1). Not matched. Need to push x - 2 back on queue 
+
+( 30 6 14 27 )
+
+         Thread 1 pushed 21 to back of the queue
+
+( 30 6 14 27 21 )
+
+    Thread 1 (1, 2)  popped x = 30 (2). Matched. Need to push 3/5 * x back on queue
+
+( 6 14 27 21 )
+
+    Thread 0   score : 3   total : 7
+         Thread 0 pushed 6 to back of the queue
+
+( 6 14 27 21 6 )
+
+    Thread 0 (0, 1)  popped x = 6 (2). Not matched. Need to push x - 2 back on queue 
+
+( 14 27 21 6 )
+
+         Thread 2 pushed 19 to back of the queue
+
+( 14 27 21 6 19 )
+
+    Thread 2 (2, 3)  popped x = 14 (2). Matched. Need to push 3/5 * x back on queue
+
+( 27 21 6 19 )
+
+         Thread 3 pushed 19 to back of the queue
+
+( 27 21 6 19 19 )
+
+    Thread 3 (3, 0)  popped x = 27 (3). Matched. Need to push 3/5 * x back on queue
+
+( 21 6 19 19 )
+
+    Thread 1   score : 12   total : 26
+         Thread 1 pushed 18 to back of the queue
+
+( 21 6 19 19 18 )
+
+    Thread 1 (1, 2)  popped x = 21 (1). Matched. Need to push 3/5 * x back on queue
+
+( 6 19 19 18 )
+
+         Thread 0 pushed 4 to back of the queue
+
+( 6 19 19 18 4 )
+
+    Thread 0 (0, 1)  popped x = 6 (2). Not matched. Need to push x - 2 back on queue 
+
+( 19 19 18 4 )
+
+    Thread 2   score : 5   total : 20
+         Thread 2 pushed 9 to back of the queue
+
+( 19 19 18 4 9 )
+
+    Thread 2 (2, 3)  popped x = 19 (3). Matched. Need to push 3/5 * x back on queue
+
+( 19 18 4 9 )
+
+    Thread 3   score : 10   total : 24
+         Thread 3 pushed 17 to back of the queue
+
+( 19 18 4 9 17 )
+
+    Thread 3 (3, 0)  popped x = 19 (3). Matched. Need to push 3/5 * x back on queue
+
+( 18 4 9 17 )
+
+    Thread 1   score : 8   total : 34
+         Thread 1 pushed 13 to back of the queue
+
+( 18 4 9 17 13 )
+
+    Thread 1 (1, 2)  popped x = 18 (2). Matched. Need to push 3/5 * x back on queue
+
+( 4 9 17 13 )
+
+         Thread 0 pushed 4 to back of the queue
+
+( 4 9 17 13 4 )
+
+    Thread 0 (0, 1)  popped x = 4 (0). Final bonus for object : no need to push back.
+
+( 9 17 13 4 )
+
+    Thread 2   score : 7   total : 27
+         Thread 2 pushed 12 to back of the queue
+
+( 9 17 13 4 12 )
+
+    Thread 2 (2, 3)  popped x = 9 (1). Not matched. Need to push x - 2 back on queue 
+
+( 17 13 4 12 )
+
+    Thread 3   score : 7   total : 31
+         Thread 3 pushed 12 to back of the queue
+
+( 17 13 4 12 12 )
+
+    Thread 3 (3, 0)  popped x = 17 (1). Not matched. Need to push x - 2 back on queue 
+
+( 13 4 12 12 )
+
+    Thread 1   score : 7   total : 41
+         Thread 1 pushed 11 to back of the queue
+
+( 13 4 12 12 11 )
+
+    Thread 1 (1, 2)  popped x = 13 (1). Matched. Need to push 3/5 * x back on queue
+
+( 4 12 12 11 )
+
+Thread 0   score : 4   total : 11 (*)
+    Thread 0 (0, 1)  popped x = 4 (0). Final bonus for object : no need to push back.
+
+( 12 12 11 )
+
+The dealer inserted : 38
+
+( 12 12 11 38 )
+
+         Thread 2 pushed 7 to back of the queue
+
+( 12 12 11 38 7 )
+
+    Thread 2 (2, 3)  popped x = 12 (0). Not matched. Need to push x - 2 back on queue 
+
+( 12 11 38 7 )
+
+         Thread 3 pushed 15 to back of the queue
+
+( 12 11 38 7 15 )
+
+    Thread 3 (3, 0)  popped x = 12 (0). Matched. Need to push 3/5 * x back on queue
+
+( 11 38 7 15 )
+
+    Thread 1   score : 5   total : 46
+         Thread 1 pushed 8 to back of the queue
+
+( 11 38 7 15 8 )
+
+    Thread 1 (1, 2)  popped x = 11 (3). Not matched. Need to push x - 2 back on queue 
+
+( 38 7 15 8 )
+
+Thread 0   score : 4   total : 15 (*)
+    Thread 0 (0, 1)  popped x = 38 (2). Not matched. Need to push x - 2 back on queue 
+
+( 7 15 8 )
+
+         Thread 2 pushed 10 to back of the queue
+
+( 7 15 8 10 )
+
+    Thread 2 (2, 3)  popped x = 7 (3). Matched. Need to push 3/5 * x back on queue
+
+( 15 8 10 )
+
+    Thread 3   score : 4   total : 35
+         Thread 3 pushed 8 to back of the queue
+
+( 15 8 10 8 )
+
+    Thread 3 (3, 0)  popped x = 15 (3). Matched. Need to push 3/5 * x back on queue
+
+( 8 10 8 )
+
+         Thread 1 pushed 9 to back of the queue
+
+( 8 10 8 9 )
+
+    Thread 1 (1, 2)  popped x = 8 (0). Not matched. Need to push x - 2 back on queue 
+
+( 10 8 9 )
+
+         Thread 0 pushed 36 to back of the queue
+
+( 10 8 9 36 )
+
+    Thread 0 (0, 1)  popped x = 10 (2). Not matched. Need to push x - 2 back on queue 
+
+( 8 9 36 )
+
+    Thread 2   score : 2   total : 29
+         Thread 2 pushed 5 to back of the queue
+
+( 8 9 36 5 )
+
+    Thread 2 (2, 3)  popped x = 8 (0). Not matched. Need to push x - 2 back on queue 
+
+( 9 36 5 )
+
+         Thread 1 pushed 6 to back of the queue
+
+( 9 36 5 6 )
+
+    Thread 1 (1, 2)  popped x = 9 (1). Matched. Need to push 3/5 * x back on queue
+
+( 36 5 6 )
+
+    Thread 3   score : 6   total : 41
+         Thread 3 pushed 9 to back of the queue
+
+( 36 5 6 9 )
+
+    Thread 3 (3, 0)  popped x = 36 (0). Matched. Need to push 3/5 * x back on queue
+
+( 5 6 9 )
+
+         Thread 0 pushed 8 to back of the queue
+
+( 5 6 9 8 )
+
+    Thread 0 (0, 1)  popped x = 5 (1). Matched. Need to push 3/5 * x back on queue
+
+( 6 9 8 )
+
+         Thread 2 pushed 6 to back of the queue
+
+( 6 9 8 6 )
+
+    Thread 2 (2, 3)  popped x = 6 (2). Matched. Need to push 3/5 * x back on queue
+
+( 9 8 6 )
+
+    Thread 1   score : 3   total : 49
+         Thread 1 pushed 6 to back of the queue
+
+( 9 8 6 6 )
+
+    Thread 1 (1, 2)  popped x = 9 (1). Matched. Need to push 3/5 * x back on queue
+
+( 8 6 6 )
+
+    Thread 3   score : 14   total : 55
+         Thread 3 pushed 22 to back of the queue
+
+( 8 6 6 22 )
+
+    Thread 3 (3, 0)  popped x = 8 (0). Matched. Need to push 3/5 * x back on queue
+
+( 6 6 22 )
+
+    Thread 0   score : 2   total : 17
+         Thread 0 pushed 3 to back of the queue
+
+( 6 6 22 3 )
+
+    Thread 0 (0, 1)  popped x = 6 (2). Not matched. Need to push x - 2 back on queue 
+
+( 6 22 3 )
+
+    Thread 2   score : 2   total : 31
+         Thread 2 pushed 4 to back of the queue
+
+( 6 22 3 4 )
+
+    Thread 2 (2, 3)  popped x = 6 (2). Matched. Need to push 3/5 * x back on queue
+
+( 22 3 4 )
+
+    Thread 1   score : 3   total : 52
+         Thread 1 pushed 6 to back of the queue
+
+( 22 3 4 6 )
+
+    Thread 1 (1, 2)  popped x = 22 (2). Matched. Need to push 3/5 * x back on queue
+
+( 3 4 6 )
+
+    Thread 3   score : 3   total : 58
+         Thread 3 pushed 5 to back of the queue
+
+( 3 4 6 5 )
+
+    Thread 3 (3, 0)  popped x = 3 (3). Final bonus for object : no need to push back.
+
+( 4 6 5 )
+
+         Thread 0 pushed 4 to back of the queue
+
+( 4 6 5 4 )
+
+    Thread 0 (0, 1)  popped x = 4 (0). Final bonus for object : no need to push back.
+
+( 6 5 4 )
+
+    Thread 2   score : 2   total : 33
+         Thread 2 pushed 4 to back of the queue
+
+( 6 5 4 4 )
+
+    Thread 2 (2, 3)  popped x = 6 (2). Matched. Need to push 3/5 * x back on queue
+
+( 5 4 4 )
+
+    Thread 1   score : 8   total : 60
+         Thread 1 pushed 14 to back of the queue
+
+( 5 4 4 14 )
+
+    Thread 1 (1, 2)  popped x = 5 (1). Matched. Need to push 3/5 * x back on queue
+
+( 4 4 14 )
+
+Thread 3   score : 3   total : 61 (*)
+    Thread 3 (3, 0)  popped x = 4 (0). Final bonus for object : no need to push back.
+
+( 4 14 )
+
+Thread 0   score : 4   total : 21 (*)
+    Thread 0 (0, 1)  popped x = 4 (0). Final bonus for object : no need to push back.
+
+( 14 )
+
+    Thread 2   score : 2   total : 35
+         Thread 2 pushed 4 to back of the queue
+
+( 14 4 )
+
+    Thread 2 (2, 3)  popped x = 14 (2). Matched. Need to push 3/5 * x back on queue
+
+( 4 )
+
+    Thread 1   score : 2   total : 62
+         Thread 1 pushed 3 to back of the queue
+
+( 4 3 )
+
+    Thread 1 (1, 2)  popped x = 4 (0). Final bonus for object : no need to push back.
+
+( 3 )
+
+Thread 3   score : 4   total : 65 (*)
+    Thread 3 (3, 0)  popped x = 3 (3). Final bonus for object : no need to push back.
+
+( )
+
+Thread 0   score : 4   total : 25 (*)
+    Thread 2   score : 5   total : 40
+         Thread 2 pushed 9 to back of the queue
+
+( 9 )
+
+    Thread 0 (0, 1)  popped x = 9 (1). Matched. Need to push 3/5 * x back on queue
+
+( )
+
+Thread 1   score : 4   total : 66 (*)
+Thread 3   score : 3   total : 68 (*)
+    Thread 0   score : 3   total : 28
+         Thread 0 pushed 6 to back of the queue
+
+( 6 )
+
+    Thread 3 (3, 0)  popped x = 6 (2). Not matched. Need to push x - 2 back on queue 
+
+( )
+
+         Thread 3 pushed 4 to back of the queue
+
+( 4 )
+
+    Thread 1 (1, 2)  popped x = 4 (0). Final bonus for object : no need to push back.
+
+( )
+
+Thread 1   score : 4   total : 70 (*)
+Final score for thread 0 : 28
+Final score for thread 1 : 70
+Final score for thread 2 : 40
+Final score for thread 3 : 68

@@ -173,15 +173,17 @@ int main(int argc, char *argv[])
 void *runner(void *param) {
     /* Preprocessing */
     int k = *((int*) param);
+    int rerun = 0; /* Flag to rerun the game one more time. Prevents last thread marking the game as complete after pushing an item to the queue */
     printf("Thread %d started\n", k);
 
     /* Wait for the game start signal */
     while(!game);
 
     /* Repeat until the game ends */
-    while(game) {
-        /* If the queue is non-empty */
+    while(game || rerun) {
+        rerun = 0; /* Reset flag after entering loop */
         pthread_mutex_lock(&queueLock); /* Begin critical section D while game is still running */
+        /* If the queue is not empty */
         if(q->size > 0) {
             /* Get the next number */
             pthread_mutex_lock(&gameLock); /* Begin critical section E if there are numbers in the queue */
@@ -217,11 +219,13 @@ void *runner(void *param) {
                 pthread_mutex_lock(&queueLock); /* Begin critical section F1 if a number needs to be pushed to the queue */
                 printf("Thread %d is pushing %d to the queue\n", k, x - score);
                 push(x - score, 1);
+                rerun = 1; /* Rerun loop if number has been pushed to queue */
                 pthread_mutex_unlock(&queueLock); /* End critical section F1 after the number has been pushed */
             } else {
                 pthread_mutex_lock(&queueLock); /* Begin critical section F2 if a number needs to be pushed to the queue */
                 printf("Thread %d is pushing %d to the queue\n", k, x - 2);
                 push(x - 2, 1);
+                rerun = 1; /* Rerun loop if number has been pushed to queue */
                 pthread_mutex_unlock(&queueLock); /* End critical section F2 after the number has been pushed */
             }
             pthread_mutex_lock(&gameLock); /* Begin critical section G after dealing with the object */

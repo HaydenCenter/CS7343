@@ -111,13 +111,13 @@ int main(int argc, char *argv[])
     q->tail = NULL;
 
     if (pthread_mutex_init(&queueLock, NULL) != 0) {
-        printf("\n queue mutex initialization has failed\n");
-        return 1;
+        printf("ERROR: Queue mutex initialization has failed\n");
+        return -1;
     }
 
     if (pthread_mutex_init(&gameLock, NULL) != 0) {
-        printf("\n game mutex initialization has failed\n");
-        return 1;
+        printf("ERROR: Game mutex initialization has failed\n");
+        return -1;
     }
 
     /* Create all threads */

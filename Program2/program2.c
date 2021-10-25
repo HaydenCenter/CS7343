@@ -165,7 +165,7 @@ int main(int argc, char *argv[])
 
     /* Print the final score for each player */
     for(int i = 0; i < N; i++) {
-        printf("Final score for thread %d : %d\n", i, scores[i]);
+        printf("Final score for Thread %d : %d\n", i, scores[i]);
     }
 }
 

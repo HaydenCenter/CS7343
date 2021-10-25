@@ -5,20 +5,30 @@
 #include <time.h>
 
 /* Implementing queue as linked list */
-
-/* List node */
 struct Node {
     int x;
     struct Node* next;
     struct Node* prev;
 };
-
-/* Linked List */
 struct Queue {
     int size;
     struct Node* head;
     struct Node* tail;
 };
+
+int N; /* Number of players */
+int T; /* Number of objects */
+int *scores; /* Array of scores for each thread */
+struct Queue* q; /* FIFO queue */
+pthread_mutex_t queueLock; /* Mutex for FIFO queue */
+
+
+int game = 0; /* Count of players still playing the 
+              |* game (including dealer). Ensures that
+              |* the game does not end until the dealer
+              |* has stopped generating numbers and all
+              |* players have emptied their hands. */
+pthread_mutex_t gameLock; /* Mutex for player count */
 
 /* Prints the FIFO queue from last in to first in */
 void printQueue() {
@@ -67,21 +77,6 @@ int pop(int print) {
         printQueue();
     return result;
 }
-/* End queue implementation */
-
-int N; /* Number of players */
-int T; /* Number of objects */
-int *scores; /* Array of scores for each thread */
-struct Queue* q; /* FIFO queue */
-pthread_mutex_t queueLock; /* Mutex for FIFO queue */
-
-
-int game = 0; /* Count of players still playing the 
-              |* game (including dealer). Ensures that
-              |* the game does not end until the dealer
-              |* has stopped generating numbers and all
-              |* players have emptied their hands. */
-pthread_mutex_t gameLock; /* Mutex for player count */
 
 /* Function passed to pthreads */
 void *runner(void *param);

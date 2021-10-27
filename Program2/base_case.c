@@ -18,6 +18,7 @@ struct Queue {
 
 int N; /* Number of players */
 int T; /* Number of objects */
+int threads = 0; /* Number of threads running */
 int *scores; /* Array of scores for each thread */
 struct Queue* q; /* FIFO queue */
 pthread_mutex_t queueLock; /* Mutex for FIFO queue */
@@ -113,7 +114,7 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    printf("Number of threads : %d | Number of objects : %d\n\n", N, T);
+    printf("Number of threads : %d | Number of objects : %d\n", N, T);
 
     /* Initializes queue */
     q = malloc(sizeof(struct Queue));
@@ -144,12 +145,17 @@ int main(int argc, char *argv[])
     pthread_attr_t attr;
     pthread_attr_init(&attr);
 
+    printf("\n--- Running Threads ---\n\n");
     for(int i = 0; i < N; i++)
     {
         int *player = malloc(sizeof(int));
         *player = i;
         pthread_create(&(tid[i]), &attr, runner, (void *) player);
     }
+
+    /* Waits until all N threads are ready */
+    while(threads < N);
+    printf("\n-- All threads ready --\n\n");
 
     /* Signal the game to start */
     pthread_mutex_lock(&gameLock); /* Begin critical section "generating" after creating all threads */
@@ -193,6 +199,7 @@ void *runner(void *param) {
     /* Preprocessing */
     int k = *((int*) param);
     printf("Thread %d started\n", k);
+    threads++;
 
     /* Wait for the game start signal */
     while(!game);

@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
 
     printf("Number of threads : %d | Number of objects : %d\n", N, T);
 
-    /* Initializes queue */
+    /* Initialize queue */
     q = malloc(sizeof(struct Queue));
     q->size = 0;
     q->head = NULL;

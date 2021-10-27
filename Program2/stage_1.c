@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
 
     printf("Number of threads : %d | Number of objects : %d\n", N, T);
 
-    /* Initializes queue */
+    /* Initialize queue */
     q = malloc(sizeof(struct Queue));
     q->size = 0;
     q->head = NULL;
@@ -168,7 +168,7 @@ int main(int argc, char *argv[])
     /* Initialize scores and names arrays */
     scores = malloc(sizeof(int) * N);
     names = malloc(sizeof(char*) * p);
-    resetGame(0); /* Initializes scores to 0 */
+    resetGame(0); /* Initialize scores to 0 */
 
     /* Sets the index of the next player into the game */
     nextPlayer = N;
@@ -264,7 +264,7 @@ int main(int argc, char *argv[])
     }
 }
 
-/* Thread method (players). Param is the player index. */
+/* Thread method (players). Param is the slot. */
 void *runner(void *param) {
     /* Preprocessing */
     int k = *((int*) param);

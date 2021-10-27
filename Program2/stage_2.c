@@ -145,7 +145,7 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    printf("Number of threads : %d | Number of objects : %d\n\n", N, T);
+    printf("Number of threads : %d | Number of objects : %d\n", N, T);
 
     /* Initializes queue */
     q = malloc(sizeof(struct Queue));
@@ -170,11 +170,15 @@ int main(int argc, char *argv[])
     names = malloc(sizeof(char*) * p);
     resetGame(0); /* Initializes scores to 0 */
 
+    /* Sets the index of the next player into the game */
+    nextPlayer = N;
+
     /* Create all threads */
     pthread_t tid[N];
     pthread_attr_t attr;
     pthread_attr_init(&attr);
 
+    printf("\n--- Running Threads ---\n\n");
     for(int i = 0; i < N; i++)
     {
         names[i] = players[i]; /* Assigns first N players to N slots */
@@ -183,23 +187,19 @@ int main(int argc, char *argv[])
         pthread_create(&(tid[i]), &attr, runner, (void *) player);
     }
 
-    /* Sets the index of the next player into the game */
-    nextPlayer = N;
-
     /* Waits until all N threads are ready */
     while(threads < N);
+    printf("\n-- All threads ready --\n\n");
 
     /* Loops until game is signaled to end */
     while(!end) {
-        printf("\n"
-        "Players\n"
-        "--------------\n");
+        printf(
+        "------- Players -------\n\n");
         for(int i = 0; i < N; i++) {
             printf("Player %d: %s\n", i, names[i]);
         }
-        printf("\n"
-        "Begin Game!\n"
-        "--------------\n");
+        printf("\n\n"
+        "----- Begin Game! -----\n\n");
 
         /* Signal the game to start */
         pthread_mutex_lock(&gameLock); /* Begin critical section "generating" after creating all threads */

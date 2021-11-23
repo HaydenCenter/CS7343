@@ -19,42 +19,42 @@ public:
         this->index = index;
         this->name = name;
     }
-    int index;
-    int tools;
-    string name;
-    deque<int> requests;
+    int index;           /* Index of the philosopher for the banker's algorithm structures */
+    int tools;           /* Number of tools needed */
+    string name;         /* Name of the philosopher */
+    deque<int> requests; /* List of tools needed */
 };
 
-int k; // Number of tool types
-int m; // Number of tables
-int n; // Number of philosophers
+int k; /* Number of tool types */
+int m; /* Number of tables */
+int n; /* Number of philosophers */
 
+/* Structures for deadlock avoidance */
 vector<int> available;
 vector<vector<int>> maximum;
 vector<vector<int>> allocation;
 
-queue<Philosopher *> philosophers;
+queue<Philosopher *> philosophers; /* Queue of philosophers waiting for a table */
 
-string buffer;
-int start = 0;
-int threads = 0;
-pthread_mutex_t queueLock;
-pthread_mutex_t outputLock;
-pthread_mutex_t threadsLock;
-pthread_mutex_t requestLock;
+string buffer;               /* Used to clear ifstream */
+int start = 0;               /* Start game signal */
+int threads = 0;             /* Number of threads running */
+pthread_mutex_t queueLock;   /* Lock for the philosopher queue */
+pthread_mutex_t outputLock;  /* Lock for printing to output */
+pthread_mutex_t requestLock; /* Lock for requesting a tool */
 
 /* Function passed to pthreads */
 void *runner(void *param);
 
 int main(int argc, char *argv[])
 {
+    /* Preprocessing */
     if (argc != 2)
     {
         printf("ERROR: Wrong number of arguments. Received %d, expecting 1.\n\n", argc - 1);
         return -1;
     }
 
-    /* Preprocessing */
     ifstream input;
     input.open(argv[1]);
     input >> k; // Number of tool types
@@ -67,6 +67,7 @@ int main(int argc, char *argv[])
         return -1;
     }
 
+    /* Reading in the starting tool counts as available */
     available = vector<int>(k, 0);
     for (int i = 0; i < k; i++)
     {
@@ -79,6 +80,7 @@ int main(int argc, char *argv[])
     }
     getline(input, buffer);
 
+    /* Initializing maximum and allocation structures and creating philosopher objects */
     maximum = vector<vector<int>>(n, vector<int>(k, 0));
     allocation = vector<vector<int>>(n, vector<int>(k, 0));
     for (int i = 0; i < n; i++)
@@ -113,13 +115,6 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    /* Initialize threads lock */
-    if (pthread_mutex_init(&threadsLock, NULL) != 0)
-    {
-        printf("ERROR: Threads mutex initialization has failed\n");
-        return -1;
-    }
-
     /* Initialize request lock */
     if (pthread_mutex_init(&requestLock, NULL) != 0)
     {
@@ -140,6 +135,7 @@ int main(int argc, char *argv[])
         pthread_create(&(tid[i]), &attr, runner, (void *)index);
     }
 
+    /* Wait for threads to all start */
     while (threads < m)
         ;
     printf("\n-- All threads ready --\n\n");
@@ -156,6 +152,7 @@ int main(int argc, char *argv[])
     cout << "All done" << endl;
 }
 
+/* Calculate need structure for banker's algorithm */
 vector<vector<int>> calculateNeed(vector<vector<int>> &m, vector<vector<int>> &a)
 {
     vector<vector<int>> need = vector<vector<int>>(n, vector<int>(k, 0));
@@ -181,6 +178,7 @@ bool lteq(vector<int> &arr1, vector<int> &arr2)
     return true;
 }
 
+/* Check if the given request will cause the state to be unsafe */
 bool safety(int index, vector<int> request, vector<int> available, vector<vector<int>> maximum, vector<vector<int>> allocation)
 {
     vector<vector<int>> need = calculateNeed(maximum, allocation);
@@ -193,6 +191,7 @@ bool safety(int index, vector<int> request, vector<int> available, vector<vector
 
     bool finish[n] = {false};
 
+    /* Find a philosopher which can finish with the available resources, and repeat until none are left */
     for (int i = 0; i < n; i++)
     {
         if (finish[i] == false && lteq(need[i], available))
@@ -205,14 +204,19 @@ bool safety(int index, vector<int> request, vector<int> available, vector<vector
             i = -1;
         }
     }
+
+    /* If all philosophers cannot finish, the state is unsafe */
     for (int i = 0; i < n; i++)
     {
         if (!finish)
             return false;
     }
+
+    /* Otherwise, the state is safe */
     return true;
 }
 
+/* Returns if a given request of tools is valid or not */
 bool request(int index, vector<int> tools)
 {
     vector<vector<int>> need = calculateNeed(maximum, allocation);
@@ -222,35 +226,39 @@ bool request(int index, vector<int> tools)
         request[tool]++;
     }
 
+    /* Throws error if philosopher requests more than he would need */
     if (!lteq(request, need[index]))
         throw overflow_error("Exceeded maximum allowed");
+
+    /* Returns false if there are not enough resources available */
     if (!lteq(request, available))
         return false;
 
+    /* Returns true or false based on of the request will cause on unsafe state */
     bool result = safety(index, request, available, maximum, allocation);
-    // cout << result << endl;
     return result;
 }
 
-/* Thread method (players). Param is the slot. */
+/* Thread method (philosophers). Param is the index of the philosopher */
 void *runner(void *param)
 {
+    /* Preprocessing */
     int thread = *(int *)param;
     pthread_mutex_lock(&queueLock);
     cout << "Starting thread " << thread << endl;
     pthread_mutex_unlock(&queueLock);
 
-    pthread_mutex_lock(&threadsLock);
     threads++;
-    pthread_mutex_unlock(&threadsLock);
 
     /* Wait for the game start signal */
     while (!start)
         ;
 
+    /* While there are still philosophers waiting */
     Philosopher *p;
     while (start)
     {
+        /* Grab a philosopher from the queue if there is one */
         pthread_mutex_lock(&queueLock);
         if (philosophers.size() > 0)
         {
@@ -258,6 +266,7 @@ void *runner(void *param)
             philosophers.pop();
             pthread_mutex_unlock(&queueLock);
         }
+        /* End the thread otherwise */
         else
         {
             pthread_mutex_unlock(&queueLock);
@@ -268,7 +277,7 @@ void *runner(void *param)
         cout << p->name << " sits down at table " << thread << endl;
         pthread_mutex_unlock(&outputLock);
 
-        // Aqcquire tools
+        /* Aqcquire tools */
         deque<int> currentTools;
 
         while (currentTools.size() < p->tools)
@@ -276,6 +285,7 @@ void *runner(void *param)
             auto t = time(0);
             bool result;
             vector<int> requestedTools;
+            /* Get the tools to request */
             for (int i = 0; i <= t % 2 && i < p->requests.size(); i++)
             {
                 int tool = p->requests.front();
@@ -283,6 +293,7 @@ void *runner(void *param)
                 requestedTools.push_back(tool);
             }
 
+            /* Request the tools */
             pthread_mutex_lock(&requestLock);
             pthread_mutex_lock(&outputLock);
             cout << p->name << " requests";
@@ -290,11 +301,12 @@ void *runner(void *param)
             {
                 cout << " " << tool;
             }
-            pthread_mutex_unlock(&outputLock);
             bool granted = request(p->index, requestedTools);
             cout << ", " << (granted ? "granted" : "denied") << endl;
+            pthread_mutex_unlock(&outputLock);
             if (granted)
             {
+                /* Adjust the allocation of tools if the request is granted */
                 for (auto tool : requestedTools)
                 {
                     currentTools.push_back(tool);
@@ -304,6 +316,7 @@ void *runner(void *param)
             }
             else
             {
+                /* Otherwise add those tools back to the list of requests */
                 for (auto tool : requestedTools)
                 {
                     p->requests.push_back(tool);
@@ -311,13 +324,14 @@ void *runner(void *param)
             }
             pthread_mutex_unlock(&requestLock);
 
+            /* Sleep between requests */
             this_thread::sleep_for(chrono::seconds(2) + chrono::milliseconds(t % 1000));
         }
 
-        // Eat
+        /* Eat */
         this_thread::sleep_for(chrono::seconds(2));
 
-        // Return tools
+        /* Return tools */
         pthread_mutex_lock(&requestLock);
         pthread_mutex_lock(&outputLock);
         cout << p->name << " finishes, releasing ";

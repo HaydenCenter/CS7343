@@ -10,7 +10,7 @@ public:
     PRDS_LRU(int pages) { max = pages; }
     deque<int> pages;
 
-    int replace(int page)
+    int replaceWith(int page)
     {
 
         auto recent = find(pages.begin(), pages.end(), page);
@@ -40,7 +40,7 @@ private:
 
 int Page_Replacement_LRU(vector<int> &pages, int nextpage, PRDS_LRU *p)
 {
-    int replace = p->replace(nextpage);
+    int replace = p->replaceWith(nextpage);
     for (int i = 0; i < pages.size(); i++)
     {
         if (pages[i] == replace)

@@ -41,6 +41,8 @@ private:
 int Page_Replacement_LRU(vector<int> &pages, int nextpage, PRDS_LRU *p)
 {
     int replace = p->replaceWith(nextpage);
+    if (replace < -1)
+        return -1;
     for (int i = 0; i < pages.size(); i++)
     {
         if (pages[i] == replace)

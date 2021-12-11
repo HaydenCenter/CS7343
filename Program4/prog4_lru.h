@@ -10,7 +10,7 @@ public:
     PRDS_LRU(int pages) { max = pages; }
     deque<int> pages;
 
-    int push(int page)
+    int replace(int page)
     {
 
         auto recent = find(pages.begin(), pages.end(), page);
@@ -34,28 +34,13 @@ public:
         }
     }
 
-    int pop()
-    {
-        if (!pages.empty())
-        {
-            int page = pages.front();
-            pages.pop_front();
-            pages.push_back(page);
-            return page;
-        }
-        else
-        {
-            return -1;
-        }
-    }
-
 private:
     int max;
 };
 
 int Page_Replacement_LRU(vector<int> &pages, int nextpage, PRDS_LRU *p)
 {
-    int replace = p->push(nextpage);
+    int replace = p->replace(nextpage);
     for (int i = 0; i < pages.size(); i++)
     {
         if (pages[i] == replace)

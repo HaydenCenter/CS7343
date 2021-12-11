@@ -1,4 +1,3 @@
-#include <iostream>
 #include <vector>
 #include <deque>
 #include <algorithm>
@@ -46,7 +45,6 @@ public:
         }
         else
         {
-            cout << "Tried to pop empty queue in LRU" << endl; // Testing
             return -1;
         }
     }

@@ -42,7 +42,6 @@ public:
             pages.push_back(victim);
             victim = pages.front();
             pages.pop_front();
-            cout << "Hello" << endl;
         }
 
         // Return the value of the victim to be replaced

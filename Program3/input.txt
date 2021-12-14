@@ -1,7 +1,7 @@
-10 2 5
-3 3 3 3 3 3 3 3 3 3
-Aristotle 2 9 6
-Buddha 5 1 3 6 2 7
-Confuscious 8 6 6 0 0 0 6 7 7
-Descartes 7 9 3 0 1 7 3 8
-Einstein 1 2
+5 2 5
+1 1 1 1 1
+Aristotle 5 0 1 2 3 4
+Buddha 5 0 1 2 3 4
+Confuscious 5 0 1 2 3 4
+Descartes 5 0 1 2 3 4
+Einstein 5 0 1 2 3 4
